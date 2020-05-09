@@ -703,6 +703,9 @@ export class FilmService {
     return this.films;
   }
   addFilm(): void {
+    if (!this.films) {
+      this.getFilms();
+    }
     this.films.push(this.newFilm);
     this.localStorage.store('films', this.films);
     this.newFilm = {

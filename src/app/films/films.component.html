@@ -1,1 +1,24 @@
-<p>films works!</p>
+<div><a routerLink="/dashboard">Dashboard</a></div>
+<div><a routerLink="/films/add">Aggiungi film</a></div>
+<div><a routerLink="/films/edit">Modifica film</a></div>
+<div><input type="text" placeholder="cerca film"></div>
+
+
+<div>
+    <div *ngFor="let film of fims" (click)="film.showMore = !film.showMore">
+        <div>
+            <div>Titolo: {{film.title}}</div>
+            <div>Indice di gradimento: {{film.stars}}</div>
+            <div>Durata: {{film.duration}}</div>
+        </div>
+        <div *ngIf="film.showMore">
+            <div>Attori: {{getCastList(film.cast)}}</div>
+            <div>Anno di uscita: {{film.releaseYear}}</div>
+            <div>Genere: {{getGenreList(film.genres)}}</div>
+            <div>Tags: {{film.tags}}</div>
+        </div>
+        <div>
+            <button (click)="selectThisFilm(film)" routerLink="/films/edit">Modifica</button>
+        </div>
+    </div>
+</div>

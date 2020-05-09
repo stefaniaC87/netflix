@@ -1,1 +1,85 @@
-<p>edit-film works!</p>
+<div><a routerLink="/films">Film</a></div>
+
+
+<div *ngIf="filmService.selectedFilm">
+    <div>
+        <div>
+            <label>Titolo</label>
+        </div>
+        <div>
+            <input type="text" placeholder="inserisci il titolo" [(ngModel)]="filmService.selectedFilm.title">
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Descrizione</label>
+        </div>
+        <div>
+            <input type="text" placeholder="inserisci descrizione" [(ngModel)]="filmService.selectedFilm.description">
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Generi</label>
+        </div>
+        <div>
+            <select [(ngModel)]="filmService.selectedFilm.genres" multiple>
+            <option [value]="genre" *ngFor="let genre of actors">{{genre.name}}</option>
+          </select>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Regista</label>
+        </div>
+        <div>
+            <input type="text" placeholder="inserisci regista" [(ngModel)]="filmService.selectedFilm.director">
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Attori</label>
+        </div>
+        <div>
+            <select [(ngModel)]="filmService.selectedFilm.cast" multiple>
+              <option [value]="actor" *ngFor="let actor of actors">{{actor.firstname}} {{actor.lastname}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Durata</label>
+        </div>
+        <div>
+            <input type="text" placeholder="inserisci la durata" [(ngModel)]="filmService.selectedFilm.duration">
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>Anno di uscita</label>
+        </div>
+        <div>
+            <input type="number" placeholder="inserisci l'anno" [(ngModel)]="filmService.selectedFilm.releaseYear">
+        </div>
+    </div>
+
+
+
+    <div>
+        <div>
+            <label>Tags</label>
+        </div>
+        <div>
+            <input type="text" placeholder="inserisci tags" [(ngModel)]="filmService.selectedFilm.tags">
+        </div>
+    </div>
+    <div>
+        <button (click)="filmService.editFilm()" routerLink="/films">Salva film</button>
+    </div>
+</div>
