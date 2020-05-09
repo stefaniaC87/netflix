@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Film } from '../models/film';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 
-const FILM: Film[] = [
+const FILMS: Film[] = [
   {
     title: 'Twilight',
     description: 'tratto dal primo romanzo della saga Twilight scritta da Stephenie Meyer',
@@ -683,6 +684,43 @@ const FILM: Film[] = [
   providedIn: 'root'
 })
 export class FilmService {
+  films: Film[];
+  selectedFilm: Film;
+  newFilm: Film = {
+    title: '',
+    description: '',
+    director: '',
+    duration: '',
+    releaseYear: 0,
+    stars: 0,
+    cast: [],
+    genres: [],
+    tags: ''
+  };
 
-  constructor() { }
+  getFilms(): Film[] {
+    this.films = this.localStorage.retrieve('films') || FILMS;
+    return this.films;
+  }
+  addFilm(): void {
+    this.films.push(this.newFilm);
+    this.localStorage.store('films', this.films);
+    this.newFilm = {
+      title: '',
+      description: '',
+      director: '',
+      duration: '',
+      releaseYear: 0,
+      stars: 0,
+      cast: [],
+      genres: [],
+      tags: ''
+    };
+  }
+editFilm(): void {
+  this.localStorage.store('films', this.films);
+  this.selectedFilm = null;
+}
+
+  constructor(private localStorage: LocalStorageService) { }
 }
