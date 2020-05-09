@@ -722,5 +722,23 @@ editFilm(): void {
   this.selectedFilm = null;
 }
 
+getLastFilms(): Film[] {
+  if (!this.films) {
+    this.getFilms();
+  }
+  return this.films.slice(-4);
+}
+getTopFilms(): Film[] {
+  if (!this.films) {
+    this.getFilms();
+  }
+  return this.films.sort((film1, film2) => {
+    if (film1.stars > film2.stars) {
+      return -1;
+    }
+
+    return 0;
+  }).slice(0, 3);
+}
   constructor(private localStorage: LocalStorageService) { }
 }

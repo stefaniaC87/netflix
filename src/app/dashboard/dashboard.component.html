@@ -1,1 +1,23 @@
-<p>dashboard works!</p>
+<div><a routerLink="/films">Films</a></div>
+<div><a routerLink="/actors">Attori</a></div>
+<div><a routerLink="/genres">Generi</a></div>
+
+<div>
+    <h3>Ultimi film inseriti</h3>
+    <div *ngFor="let film of lastFilms">
+        {{film.title}} - {{film.releaseYear}}
+    </div>
+</div>
+
+<div>
+    <h3>I film con il maggior indice di gradimento</h3>
+    <div *ngFor="let film of topFilms">
+        {{film.title}} - {{film.stars}}
+    </div>
+</div>
+<div *!ngIf="userService.loggedUser">
+    <button (click)="userService.login()">Login</button>
+</div>
+<div *ngIf="userService.loggedUser">Bentornato, {{userService.loggedUser.firstname}}
+    <button (click)="userService.logout()">Logout</button>
+</div>
