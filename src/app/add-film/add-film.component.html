@@ -24,10 +24,13 @@
         <div>
             <label>Generi</label>
         </div>
-        <div>
+        <!-- <div>
             <select [(ngModel)]="filmService.newFilm.genres" multiple>
-            <option [value]="genre" *ngFor="let genre of actors">{{genre.name}}</option>
+            <option [value]="genre" *ngFor="let genre of genres">{{genre.name}}</option>
           </select>
+        </div> -->
+        <div *ngFor="let genre of genres">
+            <input type="checkbox" (change)="addGenre($event.target.chekcked, genre)"> {{genre.name}}
         </div>
     </div>
 

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Film } from '../models/film';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const FILMS: Film[] = [
   {
@@ -698,9 +700,10 @@ export class FilmService {
     tags: ''
   };
 
-  getFilms(): Film[] {
-    this.films = this.localStorage.retrieve('films') || FILMS;
-    return this.films;
+  getFilms(): Observable<Film[]> {
+    return this.http.get<Film[]>('http://localhost/lezione20/netflix/v1/films.json');
+    /* this.films = this.localStorage.retrieve('films') || FILMS;
+    return this.films; */
   }
   addFilm(): void {
     if (!this.films) {
@@ -743,5 +746,7 @@ getTopFilms(): Film[] {
     return 0;
   }).slice(0, 3);
 }
-  constructor(private localStorage: LocalStorageService) { }
+  constructor(
+    private localStorage: LocalStorageService,
+    private http: HttpClient,) { }
 }

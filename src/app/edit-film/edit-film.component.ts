@@ -24,5 +24,16 @@ export class EditFilmComponent implements OnInit {
     this.genres = this.genresService.getGenres();
 
   }
+  updateActors(checked : boolean, actor: Actor){
+    if(checked){
+      this.filmService.selectedFilm.cast.push(actor);
+    }
+    else{
+      this.filmService.selectedFilm.cast = this.filmService.selectedFilm.cast.filter(x => x.lastname != actor.lastname) ;
+    }
+  }
+  checkActor(actor : Actor){
+    return this.filmService.selectedFilm.cast.find(x => x.lastname == actor.lastname);
+  }
 
 }

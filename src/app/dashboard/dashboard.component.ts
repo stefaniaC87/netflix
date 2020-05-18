@@ -11,6 +11,9 @@ import { Film } from '../models/film';
 export class DashboardComponent implements OnInit {
   lastFilms: Film[];
   topFilms: Film[];
+  username: string;
+  password: string;
+  successLogin: boolean;
 
   constructor(
     public userService: UserService,
@@ -22,5 +25,9 @@ export class DashboardComponent implements OnInit {
     this.lastFilms = this.filmService.getLastFilms();
     this.topFilms = this.filmService.getTopFilms();
   }
+
+login(){
+  this.successLogin =this.userService.login(this.username, this.password);
+}
 
 }

@@ -16,7 +16,10 @@
     </div>
 </div>
 <div *!ngIf="userService.loggedUser">
-    <button (click)="userService.login()">Login</button>
+    <input type="text" [(ngModel)]="username" placeholder="username">
+    <input type="text" [(ngModel)]="password" placeholder="password">
+    <div *ngIf="successLogin === false">Errore nel login</div>
+    <button (click)="login()">Login</button>
 </div>
 <div *ngIf="userService.loggedUser">Bentornato, {{userService.loggedUser.firstname}}
     <button (click)="userService.logout()">Logout</button>

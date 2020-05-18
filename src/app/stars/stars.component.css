@@ -1,0 +1,8 @@
+.ng-fa-icon {
+    color: #ff3399;
+    cursor: pointer;
+}
+
+.ng-fa-icon:hover {
+    color: darkblue;
+}

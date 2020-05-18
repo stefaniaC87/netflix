@@ -1,6 +1,24 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+const USERS:  User[] = [
+  {
+    id: 1,
+    username: 'stefy',
+    password: '5t3fan1a',
+    firstname: 'Stefania',
+    lastname: 'Cappellino',
+    favoritesFilm: []
+  },
+  {
+    id: 2,
+    username: 'anto',
+    password: 'anto22',
+    firstname: 'Antonella',
+    lastname: 'Cappellino',
+    favoritesFilm: []
+  },
+]
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +28,11 @@ export class UserService {
 
   constructor(private localStorage: LocalStorageService) { }
 
-  login(): void {
-    this.loggedUser = {
-      id: 1,
-      firstname: 'Stefania',
-      lastname: 'cappellino',
-      favoritesFilm: []
-    };
+  login(username: string, password: string): boolean {
+    this.loggedUser = USERS.find(x=> x.username == username && x.password == password);
 
     this.localStorage.store('loggedUser', this.loggedUser);
+    return this.loggedUser != null;
   }
   logout(): void {
     this.loggedUser = null;

@@ -45,9 +45,10 @@
             <label>Attori</label>
         </div>
         <div>
-            <select [(ngModel)]="filmService.selectedFilm.cast" multiple>
-              <option [value]="actor" *ngFor="let actor of actors">{{actor.firstname}} {{actor.lastname}}</option>
-            </select>
+
+            <div *ngFor="let actor of actors">
+                <input type="checkbox" [checked]="checkActor(actor)" (change)="updateActors($event.target.checked, actor)"> {{actor.firstname}} {{actor.lastname}}
+            </div>
         </div>
     </div>
 

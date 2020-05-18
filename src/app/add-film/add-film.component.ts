@@ -13,6 +13,7 @@ import { Genre } from '../models/genre';
 export class AddFilmComponent implements OnInit {
   actors: Actor[];
   genres: Genre[];
+  pippo = console;
 
   constructor(
     public filmService: FilmService,
@@ -23,6 +24,16 @@ export class AddFilmComponent implements OnInit {
     this.actors = this.actorService.getActors();
     this.genres = this.genresService.getGenres();
 
+  }
+  addGenre(checked: boolean, genre: Genre){
+    if(checked){
+      this.filmService.newFilm.genres.push(genre);
+
+    }
+    else{
+      this.filmService.newFilm.genres = this.filmService.newFilm.genres.filter(x => x.name != genre.name);
+
+    }
   }
 
 }

@@ -1,14 +1,17 @@
 <div><a routerLink="/dashboard">Dashboard</a></div>
 <div><a routerLink="/films/add">Aggiungi film</a></div>
 <div><a routerLink="/films/edit">Modifica film</a></div>
-<div><input type="text" placeholder="cerca film"></div>
+<div><input type="text" placeholder="cerca film" (input)="text = $event.target.value"></div>
 
 
 <div>
-    <div *ngFor="let film of fims" (click)="film.showMore = !film.showMore">
+    <div *ngFor="let film of films | filmListFilter:text" (click)="film.showMore = !film.showMore">
         <div>
             <div>Titolo: {{film.title}}</div>
-            <div>Indice di gradimento: {{film.stars}}</div>
+            <div>Indice di gradimento: {{film.stars}}
+                <app-stars (voteChanged)="setVote(film, $event)" [vote]="film.stars"></app-stars>
+
+            </div>
             <div>Durata: {{film.duration}}</div>
         </div>
         <div *ngIf="film.showMore">
