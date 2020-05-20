@@ -5,6 +5,7 @@ import { Film } from '../models/film';
   name: 'filmListFilter'
 })
 export class FilmListFilterPipe implements PipeTransform {
+  timeout;
 
   transform(value: Film[], ...args: string[]): Film[] {
     let text = args[0];

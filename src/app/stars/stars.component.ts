@@ -24,7 +24,7 @@ export class StarsComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.icons=[];
-for(var i=1; i<=5; i++){
+for(var i=1; i<=starsTotal; i++){
   if(this.vote >=i){
     this.icons.push(this.faStar);
   }

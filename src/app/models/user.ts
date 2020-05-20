@@ -6,6 +6,7 @@ export interface User {
   password: string;
   firstname: string;
   lastname: string;
-  favoritesFilm: Film[];
   token: string;
+  favoritesFilm: Film[];
+
 }

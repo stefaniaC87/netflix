@@ -15,7 +15,7 @@ export class FilmsComponent implements OnInit {
   films: Film[] = [];
 
 
-  text : string ="";
+  search : string ="";
 
 
 
@@ -34,23 +34,7 @@ export class FilmsComponent implements OnInit {
 
 
 
-search(event){
-  this.text = event.target.value;
-  if(this.timeout){
 
-    clearTimeout(this.timeout);
-  }
-  let scope = this;
-  this.timeout = setTimeout(function() {
-    if(test.length > 2){
-      scope.films = scope.filmService.getFilms().filter(x => x.title.toLowerCase().indexOf(test.toLowerCase()) > -1);
-    }
-    else {
-      scope.films = scope.filmService.getFilms();
-    }
-  }, 300);
-
-}
 
   getCastList(cast: Actor[]): string {
     return cast.map(x => x.firstname + ' ' + x.lastname).join(',');
@@ -66,6 +50,7 @@ search(event){
 
   setVote(film: Film, vote: number){
     film.stars=vote;
+    this.filmService.editFilm();
   }
 
   remove(film: Film): void{

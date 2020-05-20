@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { User } from '../models/user';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClient, HttpHeaders }    from '@angular/common/http';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 /* const USERS:  User[] = [
   {
@@ -32,7 +32,9 @@ import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 export class UserService {
   loggedUser: User;
 
-  constructor(private localStorage: LocalStorageService) { }
+  constructor(
+    private http = HttpClient,
+    private localStorage: LocalStorageService) { }
 
   login(username: string, password: string): boolean {
     this.http.post<User>('http://netflix.cristiancarrino.com/user/login.php', {
@@ -48,12 +50,13 @@ export class UserService {
 
     return this.loggedUser != null;
   }
+  getLoggedUser(): void {
+    this.loggedUser = this.localStorage.retrieve('loggedUser');
+    return this.loggedUser;
+  }
   logout(): void {
     this.loggedUser = null;
     this.localStorage.clear('loggedUser');
   }
-  getLoggedUser(): void {
-    this.loggedUser = this.localStorage.retrieve('loggedUser');
-    return this.loggedUser
-  }
+
 }

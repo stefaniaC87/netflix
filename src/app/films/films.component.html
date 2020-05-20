@@ -2,11 +2,11 @@
 <div><a routerLink="/films/add">Aggiungi film</a></div>
 <div><a routerLink="/films/edit">Edita film</a></div>
 
-<div>Cerca film: <input type="text" placeholder="cerca film" (input)="text = $event.target.value" (input)="search($event)"></div>
+<div>Cerca film: <input type="text" placeholder="cerca film" (input)="text = $event.target.value" (input)="search($event)" [(ngModel)]="search"></div>
 
 
 <div>
-    <div *ngFor="let film of films | filmListFilter:text" (click)="film.showMore = !film.showMore">
+    <div *ngFor="let film of films | filmListFilter:search" (click)="film.showMore = !film.showMore">
         <div>
             <div>Titolo: {{film.title}}</div>
             <div>Indice di gradimento: {{film.stars}}
@@ -23,7 +23,7 @@
             <div>Tags: {{film.tags}}</div>
         </div>
         <div>
-            <button (click)="selectThisFilm(film)" routerLink="/films/edit">Modifica</button>
+            <button (click)="selectThisFilm(film)" routerLink="/films/edit{{film.id}}">Modifica</button>
             <button (click)="remove(film)" ">Cancella</button>
         </div>
     </div>
