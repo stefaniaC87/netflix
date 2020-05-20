@@ -701,6 +701,11 @@ export class FilmService {
     genres: [],
     tags: ''
   };
+  constructor(
+    private localStorage: LocalStorageService,
+    private http: HttpClient,
+    private userService: UserService) { }
+
 httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -784,8 +789,5 @@ getTopFilms(films: Film[]): Film[] {
     return 0;
   }).slice(0, 3);
 }
-  constructor(
-    private localStorage: LocalStorageService,
-    private http: HttpClient,
-    private userService: UserService) { }
+
 }

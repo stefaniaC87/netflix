@@ -9,15 +9,18 @@ const starsTotal = 5;
   templateUrl: './stars.component.html',
   styleUrls: ['./stars.component.css']
 })
+
 export class StarsComponent implements OnChanges {
   @Input() vote: number;
 @Output() voteChanged = new EventEmitter();
   icons : IconDefinition[] = [];
   faStar = faStar;
   faStarHalfAlt = faStarHalfAlt;
-  faStarEmpty = faStarEmpty;
+  starEmpty = faStarEmpty;
 
   constructor() { }
+
+
 
   ngOnChanges(): void {
     this.icons=[];
@@ -29,7 +32,7 @@ for(var i=1; i<=5; i++){
     this.icons.push(this.faStarHalfAlt);
   }
   else{
-    this.icons.push(this.faStarEmpty);
+    this.icons.push(this.starEmpty);
   }
 
 }

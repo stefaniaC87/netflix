@@ -5,6 +5,7 @@ import { Actor } from '../models/actor';
 import { Genre } from '../models/genre';
 
 
+
 @Component({
   selector: 'app-films',
   templateUrl: './films.component.html',
@@ -12,7 +13,9 @@ import { Genre } from '../models/genre';
 })
 export class FilmsComponent implements OnInit {
   films: Film[] = [];
-  // search : string ="";
+
+
+  text : string ="";
 
 
 
@@ -29,20 +32,25 @@ export class FilmsComponent implements OnInit {
   }
 
 
-  search(event){
-    let test=event.target.value;
-    if(this.timeOut){
-      clearTimeout(this.timeOut);
-    }
-    setTimeout(() =>{
-      if(test.length >=3 ){
-        this.filmService.getFilms().subscribe(response => this.films =)
-      }
-    })
-    this.films = this.filmService.getFilms().filter(x => x.title.toLowerCase().indexOf(test.toLowerCase()) > -1);
+
+
+search(event){
+  this.text = event.target.value;
+  if(this.timeout){
+
+    clearTimeout(this.timeout);
   }
+  let scope = this;
+  this.timeout = setTimeout(function() {
+    if(test.length > 2){
+      scope.films = scope.filmService.getFilms().filter(x => x.title.toLowerCase().indexOf(test.toLowerCase()) > -1);
+    }
+    else {
+      scope.films = scope.filmService.getFilms();
+    }
+  }, 300);
 
-
+}
 
   getCastList(cast: Actor[]): string {
     return cast.map(x => x.firstname + ' ' + x.lastname).join(',');

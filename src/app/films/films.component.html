@@ -10,6 +10,7 @@
         <div>
             <div>Titolo: {{film.title}}</div>
             <div>Indice di gradimento: {{film.stars}}
+
                 <app-stars (voteChanged)="setVote(film, $event)" [vote]="film.stars"></app-stars>
 
             </div>
