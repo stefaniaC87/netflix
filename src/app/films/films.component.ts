@@ -11,26 +11,39 @@ import { Genre } from '../models/genre';
   styleUrls: ['./films.component.css']
 })
 export class FilmsComponent implements OnInit {
-  films: Film[];
-  text : string ="";
+  films: Film[] = [];
+  // search : string ="";
+
 
 
   constructor(private filmService: FilmService) { }
 
   ngOnInit(): void {
-    this.filmService.getFilms = this.filmService.getFilms();
-  }
-/*   search(event){
-    let test=event.target.value;
-    let scope = this;
-    setTimeout(function(){
-if(test.length >2){
-  this.films= scope.filmService.getFilms().filter(x => x.title.toLowerCase().indexOf(test.toLowerCase))
-}
+    this.filmService.getFilms().subscribe(response => {
+      this.films = response;
     })
+    /* this.films = this.filmService.getFilms(); */
+    /* this.filmService.getFilms().subscribe(response =>{
 
-    this.films = this.filmService.getFilms().filter(x=>x.title.toLowerCase().indexOf(test.toLowerCase())>-1)
-  } */
+    }); */
+  }
+
+
+  search(event){
+    let test=event.target.value;
+    if(this.timeOut){
+      clearTimeout(this.timeOut);
+    }
+    setTimeout(() =>{
+      if(test.length >=3 ){
+        this.filmService.getFilms().subscribe(response => this.films =)
+      }
+    })
+    this.films = this.filmService.getFilms().filter(x => x.title.toLowerCase().indexOf(test.toLowerCase()) > -1);
+  }
+
+
+
   getCastList(cast: Actor[]): string {
     return cast.map(x => x.firstname + ' ' + x.lastname).join(',');
   }
@@ -45,5 +58,9 @@ if(test.length >2){
 
   setVote(film: Film, vote: number){
     film.stars=vote;
+  }
+
+  remove(film: Film): void{
+    this.filmService.removeFilm(film.id);
   }
 }

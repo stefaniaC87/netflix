@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Film } from '../models/film';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 const FILMS: Film[] = [
   {
@@ -699,18 +701,37 @@ export class FilmService {
     genres: [],
     tags: ''
   };
-
+httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
   getFilms(): Observable<Film[]> {
-    return this.http.get<Film[]>('http://localhost/lezione20/netflix/v1/films.json');
+
+    return this.http.get<Film[]>('http://netflix.cristiancarrino.com/film/read.php').pipe(
+      tap(response => console.log(response)),
+
+    );
     /* this.films = this.localStorage.retrieve('films') || FILMS;
-    return this.films; */
+    return of(this.films); */
   }
+
   addFilm(): void {
-    if (!this.films) {
-      this.getFilms();
-    }
-    this.films.push(this.newFilm);
-    this.localStorage.store('films', this.films);
+    let loggedUser = this.userService.getLoggedUser();
+    let httpOptions = {
+      headers: new HttpHeaders(
+        {'Content-Type': 'application/json' ,
+        'Authorization': loggedUser.token
+      })
+    };
+    console.log(this.newFilm);
+
+    this.http.post<Film>('http://netflix.cristiancarrino.com/film/create.php', this.newFilm, this.httpOptions).subscribe(response => {
+      console.log(response);
+      this.getFilms().subscribe(response => this.films = response);
+
+
+
+
+    });
     this.newFilm = {
       title: '',
       description: '',
@@ -724,21 +745,38 @@ export class FilmService {
     };
   }
 editFilm(): void {
-  this.localStorage.store('films', this.films);
-  this.selectedFilm = null;
+  let loggedUser = this.userService.getLoggedUser();
+  let httpOptions = {
+    headers: new HttpHeaders(
+      {'Content-Type': 'application/json' ,
+      'Authorization': loggedUser.token
+    })
+  };
+  this.http.post<Film>('http://netflix.cristiancarrino.com/film/update.php', this.selectedFilm, this.httpOptions).subscribe(response => {
+    console.log(response);
+    this.getFilms().subscribe(response => this.films = response);
+});
 }
+removeFilm(id: number): void {
+  let loggedUser = this.userService.getLoggedUser();
+  let httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json' ,
+      'Authorization': loggedUser.token
+    })
+  };
+  this.http.post<Film>('http://netflix.cristiancarrino.com/film/delete.php', {id: id}, this.httpOptions).subscribe(response => {
+    console.log(response);
+    this.getFilms().subscribe(response => this.films = response);
+});
+}
+getLastFilms(films: Film[]): Film[] {
 
-getLastFilms(): Film[] {
-  if (!this.films) {
-    this.getFilms();
-  }
-  return this.films.slice(-4);
+  return films.slice(-4);
 }
-getTopFilms(): Film[] {
-  if (!this.films) {
-    this.getFilms();
-  }
-  return this.films.sort((film1, film2) => {
+getTopFilms(films: Film[]): Film[] {
+
+  return films.sort((film1, film2) => {
     if (film1.stars > film2.stars) {
       return -1;
     }
@@ -748,5 +786,6 @@ getTopFilms(): Film[] {
 }
   constructor(
     private localStorage: LocalStorageService,
-    private http: HttpClient,) { }
+    private http: HttpClient,
+    private userService: UserService) { }
 }

@@ -1,7 +1,8 @@
 <div><a routerLink="/dashboard">Dashboard</a></div>
 <div><a routerLink="/films/add">Aggiungi film</a></div>
-<div><a routerLink="/films/edit">Modifica film</a></div>
-<div><input type="text" placeholder="cerca film" (input)="text = $event.target.value"></div>
+<div><a routerLink="/films/edit">Edita film</a></div>
+
+<div>Cerca film: <input type="text" placeholder="cerca film" (input)="text = $event.target.value" (input)="search($event)"></div>
 
 
 <div>
@@ -22,6 +23,7 @@
         </div>
         <div>
             <button (click)="selectThisFilm(film)" routerLink="/films/edit">Modifica</button>
+            <button (click)="remove(film)" ">Cancella</button>
         </div>
     </div>
 </div>

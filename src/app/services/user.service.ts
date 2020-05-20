@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { User } from '../models/user';
+import { HttpClientModule }    from '@angular/common/http';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
-const USERS:  User[] = [
+/* const USERS:  User[] = [
   {
     id: 1,
     username: 'stefy',
@@ -19,6 +20,11 @@ const USERS:  User[] = [
     favoritesFilm: []
   },
 ]
+@NgModule({
+  imports: [
+    HttpClientModule,
+  ],
+}) */
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +35,17 @@ export class UserService {
   constructor(private localStorage: LocalStorageService) { }
 
   login(username: string, password: string): boolean {
-    this.loggedUser = USERS.find(x=> x.username == username && x.password == password);
+    this.http.post<User>('http://netflix.cristiancarrino.com/user/login.php', {
+      "username": username,
+      "password": password
+    }).subscribe(response => {
+      console.log(response);
+      this.loggedUser = response;
+      this.localStorage.store('loggedUser', this.loggedUser);
+        });
 
-    this.localStorage.store('loggedUser', this.loggedUser);
+
+
     return this.loggedUser != null;
   }
   logout(): void {
@@ -40,5 +54,6 @@ export class UserService {
   }
   getLoggedUser(): void {
     this.loggedUser = this.localStorage.retrieve('loggedUser');
+    return this.loggedUser
   }
 }

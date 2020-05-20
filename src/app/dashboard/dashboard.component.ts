@@ -22,8 +22,17 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.getLoggedUser();
-    this.lastFilms = this.filmService.getLastFilms();
-    this.topFilms = this.filmService.getTopFilms();
+    this.filmService.getFilms().subscribe(response => {
+      this.lastFilms = this.filmService.getLastFilms(response);
+      this.topFilms = this.filmService.getTopFilms(response);
+      console.log(this.lastFilms);
+    console.log(this.topFilms);
+    });
+
+
+
+
+
   }
 
 login(){
