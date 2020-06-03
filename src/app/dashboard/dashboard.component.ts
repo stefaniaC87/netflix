@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmService } from './../services/film.service';
-import { UserService } from './../services/user.service';
+//import { UserService } from './../services/user.service';
 
 import { Film } from '../models/film';
 
@@ -12,17 +12,15 @@ import { Film } from '../models/film';
 export class DashboardComponent implements OnInit {
   lastFilms: Film[];
   topFilms: Film[];
-  username: string;
-  password: string;
-  successLogin: boolean;
+
 
   constructor(
-    public userService: UserService,
+
     private filmService: FilmService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
-    this.userService.getLoggedUser();
+
     this.filmService.getFilms().subscribe(response => {
       this.lastFilms = this.filmService.getLastFilms(response);
       this.topFilms = this.filmService.getTopFilms(response);
@@ -36,8 +34,6 @@ export class DashboardComponent implements OnInit {
 
   }
 
-login(){
-  this.successLogin =this.userService.login(this.username, this.password);
-}
+
 
 }
