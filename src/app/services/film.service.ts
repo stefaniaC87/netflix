@@ -26,22 +26,15 @@ if(this.films){
   return of(this.films);
 }
 else{
-  return this.http.get<Film[]>(CONFIG.hostApi + '/film/read.php').pipe(
-    map(films => films.map(film =>{
-      film.stars = (film as any).vote;
-      film.coverUrl = (film as any).cover_url;
-      film.createdBy = (film as any).created_by;
-      return film;
-    })),
-    tap(response => {
-      console.log('filma scaricati dal server:', response);
-      this.films = response;
-    }),
-catchError(error => {
-  alert(error.status + ':' + error.error);
-  return [];
-})
-  );
+return this.http.get<Film[]>(CONFIG.hostApi + '/film/read.php').pipe(
+  tap(response => {
+    console.log('film scaricati dal server', response);
+  }),
+  catchError(error => {
+    alert(error.status + ':' + error.error);
+    return [];
+  })
+);
 }
 
   }
@@ -116,7 +109,7 @@ removeFilm(film: Film): Observable<any> {
   let loggedUser = this.userService.getLoggedUser();
  if(!loggedUser){
    alert('please login');
-   return:
+   return;
  }
  let httpOptions = {
   headers: new HttpHeaders(

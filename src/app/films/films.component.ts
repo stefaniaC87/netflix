@@ -3,7 +3,10 @@ import { Film } from '../models/film';
 import { FilmService } from '../services/film.service';
 import { Actor } from '../models/actor';
 import { Genre } from '../models/genre';
-
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { faSearch, faEllipsisV, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 
 
 @Component({
@@ -13,47 +16,65 @@ import { Genre } from '../models/genre';
 })
 export class FilmsComponent implements OnInit {
   films: Film[] = [];
-
+  faClock = faClock;
+  faSearch = faSearch;
+  faEllipsisV = faEllipsisV;
+  faPlusCircle = faPlusCircle;
+selectedFilm: Film;
 
   search : string ="";
+openSearchField: boolean = false;
+searchField : string = 'title';
+loadingFilms: boolean;
 
 
+  constructor(public userService: UserService,
+    private filmService: FilmService) { }
 
-  constructor(private filmService: FilmService) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.loadingFilms = true;
     this.filmService.getFilms().subscribe(response => {
       this.films = response;
-    })
-    /* this.films = this.filmService.getFilms(); */
-    /* this.filmService.getFilms().subscribe(response =>{
+      this.shuffle(this.films);
+      this.loadingFilms = false;
+    });
 
-    }); */
   }
+  shuffle(array : any[]){
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while(0 != currentIndex){
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
 
-
-
-
-
-  getCastList(cast: Actor[]): string {
-    return cast.map(x => x.firstname + ' ' + x.lastname).join(',');
   }
-  getGenreList(genres: Genre[]): string {
-    return genres.map(x => x.name).join(',');
-  }
-  selectThisFilm(film: Film): void {
-    // tslint:disable-next-line: deprecation
-    event.stopPropagation();
-    this.filmService.selectedFilm = film;
+  setSearchField(searchField: string){
+    this.searchField = searchField;
+    this.openSearchField = false;
   }
 
   setVote(film: Film, vote: number){
     film.stars=vote;
-    this.filmService.editFilm();
+    this.filmService.editFilm(film).subscribe(response => console.log(response))
   }
 
   remove(film: Film): void{
-    this.filmService.removeFilm(film.id);
+    this.filmService.removeFilm(film).subscribe(() => this.ngOnInit());
   }
+
+  showPlot(film: Film){
+    event.preventDefault();
+    this.selectedFilm = film;
+  }
+
+hidePlot(){
+  this.selectedFilm = null;
+}
+
+
 }

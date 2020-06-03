@@ -6,7 +6,8 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { Actor } from '../models/actor';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../config';
+// import { CONFIG } from '../config';
+import {CONFIG} from '../config';
 
 @Injectable({
   providedIn: 'root'

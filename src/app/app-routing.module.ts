@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'films/add', component: AddFilmComponent
   },
   {
-    path: 'films/edit', component: EditFilmComponent
+    path: 'films/edit/:id', component: EditFilmComponent
   },
   {
     path: 'actors', component: ActorsComponent
@@ -35,7 +35,7 @@ const routes: Routes = [
     path: 'actors/add', component: AddActorComponent
   },
   {
-    path: 'actors/edit', component: EditActorComponent
+    path: 'actors/edit/:id', component: EditActorComponent
   },
   {
     path: 'genres', component: GenresComponent
@@ -44,7 +44,7 @@ const routes: Routes = [
     path: 'genres/add', component: AddGenreComponent
   },
   {
-    path: 'genres/edit', component: EditGenreComponent
+    path: 'genres/edit/:id', component: EditGenreComponent
   }
 ];
 

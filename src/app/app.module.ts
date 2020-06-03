@@ -22,6 +22,7 @@ import { FilmListFilterPipe } from './pipes/film-list-filter.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

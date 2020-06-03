@@ -12,6 +12,7 @@ const starsTotal = 5;
 
 export class StarsComponent implements OnChanges {
   @Input() vote: number;
+  @Input() canEdit: boolean;
 @Output() voteChanged = new EventEmitter();
   icons : IconDefinition[] = [];
   faStar = faStar;
@@ -40,5 +41,11 @@ for(var i=1; i<=starsTotal; i++){
 
 }
 
+setVote(vote: number){
+  event.stopPropagation();
+  if(this.canEdit){
+    this.voteChanged.emit(vote);
+  }
+}
 
 }

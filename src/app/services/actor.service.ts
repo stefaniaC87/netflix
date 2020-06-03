@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Actor } from '../models/actor';
 import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -10,7 +10,6 @@ import { CONFIG } from '../config';
   providedIn: 'root'
 })
 export class ActorService {
-
   actors: Actor[];
   selectedActor: Actor;
   newActor: Actor = {
@@ -19,28 +18,33 @@ export class ActorService {
   };
 
   getActors(): Observable<Actor[]> {
-    if(this.actors){
+    if (this.actors) {
       return of(this.actors);
-    }
-    else{
+    } else {
       return this.http.get<Actor[]>(CONFIG.hostApi + '/actor/read.php').pipe(
         tap(response => this.actors = response),
       );
     }
   }
+
   addActor(): void {
     this.actors.push(this.newActor);
     this.localStorage.store('actors', this.actors);
+
+    // Reset newActor
     this.newActor = {
       firstname: '',
-    lastname: ''
+      lastname: ''
     };
   }
-editActor(): void {
-  this.localStorage.store('actors', this.actors);
-  this.selectedActor = null;
-}
 
-  constructor(private localStorage: LocalStorageService,
-    private http: HttpClient) { }
+  editActor(): void {
+    this.localStorage.store('actors', this.actors);
+    this.selectedActor = null;
+  }
+
+  constructor(
+    private localStorage: LocalStorageService,
+    private http: HttpClient
+  ) { }
 }
