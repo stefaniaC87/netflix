@@ -1,56 +1,13 @@
 import { Injectable } from '@angular/core';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import { Genre } from '../models/genre';
-const GENRES: Genre[] = [
-  {
-    name: 'fantasy'
-  },
-  {
-    name: 'romantico'
-  },
-  {
-    name: 'avventura'
-  },
-  {
-    name: 'drammatico'
-  },
-  {
-    name: 'sentimentale'
-  },
-  {
-    name: 'paranormal'
-  },
-  {
-        name: 'thriller'
-      },
-      {
-        name: 'giallo'
-      },
-      {
-        name: 'epico'
-      },
-      {
-        name: 'commedia'
-      },
-      {
-        name: 'teen drama'
-      },
-      {
-        name: 'crime'
-      },
-      {
-        name: 'horror'
-      },
-      {
-        name: 'fantascienza'
-      },
-      {
-        name: 'azione'
-      },
-      {
-        name: 'supereroi'
-      },
-];
+import { Observable, of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
+import { UserService } from './user.service';
+import { Actor } from '../models/actor';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CONFIG } from '../config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,23 +18,31 @@ export class GenreService {
    name: '',
   };
 
-  getGenres(): Genre[] {
-    this.genres = this.localStorage.retrieve('genres') || GENRES;
-    return this.genres;
+  getGenres(): Observable<Genre[]> {
+    if(this.genres){
+      return of(this.genres);
+    }
+    else{
+      return this.http.get<Genre[]>(CONFIG.hostApi + '/genre/read.php').pipe(
+        tap(response => this.genres = response),
+      );
+    }
+
   }
   addGenre(): void {
-    this.genres.push(this.newGenre);
+    /* this.genres.push(this.newGenre);
     this.localStorage.store('genres', this.genres);
     this.newGenre = {
       name : '',
-    };
+    }; */
   }
 editGenre(): void {
-  this.localStorage.store('genres', this.genres);
-  this.selectedGenre = null;
+  /* this.localStorage.store('genres', this.genres);
+  this.selectedGenre = null; */
 }
 
-  constructor(private localStorage: LocalStorageService) { }
+  constructor( private http: HttpClient,
+    private userService: UserService) { }
 
 
 }

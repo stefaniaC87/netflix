@@ -9,7 +9,7 @@ export class AddGenreComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

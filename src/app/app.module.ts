@@ -20,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StarsComponent } from './stars/stars.component';
 import { FilmListFilterPipe } from './pipes/film-list-filter.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     GenresComponent,
     StarsComponent,
     FilmListFilterPipe,
+    NavbarComponent,
 
   ],
   imports: [

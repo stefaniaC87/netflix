@@ -2,29 +2,11 @@ import { Injectable, NgModule } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient, HttpHeaders }    from '@angular/common/http';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
-/* const USERS:  User[] = [
-  {
-    id: 1,
-    username: 'stefy',
-    password: '5t3fan1a',
-    firstname: 'Stefania',
-    lastname: 'Cappellino',
-    favoritesFilm: []
-  },
-  {
-    id: 2,
-    username: 'anto',
-    password: 'anto22',
-    firstname: 'Antonella',
-    lastname: 'Cappellino',
-    favoritesFilm: []
-  },
-]
-@NgModule({
-  imports: [
-    HttpClientModule,
-  ],
-}) */
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { CONFIG } from '../config';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,21 +18,26 @@ export class UserService {
     private http = HttpClient,
     private localStorage: LocalStorageService) { }
 
-  login(username: string, password: string): boolean {
-    this.http.post<User>('http://netflix.cristiancarrino.com/user/login.php', {
+  login(username: string, password: string, rememberMe: boolean): Observable<User> {
+    return this.http.post<User>(CONFIG.hostApi + '/user/login.php', {
       "username": username,
       "password": password
-    }).subscribe(response => {
-      console.log(response);
-      this.loggedUser = response;
-      this.localStorage.store('loggedUser', this.loggedUser);
-        });
+    }).pipe(
+      tap(response => {
+        this.loggedUser = response;
+        if(rememberMe){
+          this.localStorage.store('loggedUser', this.loggedUser);
+        }
+      }),
+      catchError(error => {
+        alert(error.status + ':' + error.error);
+        return of(null);
+      })
 
+    );
 
-
-    return this.loggedUser != null;
   }
-  getLoggedUser(): void {
+  getLoggedUser(): User {
     this.loggedUser = this.localStorage.retrieve('loggedUser');
     return this.loggedUser;
   }

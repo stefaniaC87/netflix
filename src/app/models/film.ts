@@ -5,6 +5,7 @@ export interface Film {
   id?: number;
   title: string;
   description: string;
+  plot?: string;
   director: string;
   duration: string;
   releaseYear: number;
@@ -13,4 +14,5 @@ export interface Film {
   genres: Genre[];
   tags: string;
   coverUrl?: string;
+  createdBy?: number;
 }
