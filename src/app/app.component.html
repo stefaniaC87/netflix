@@ -1,2 +1,17 @@
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
+<div class="page">
+    <app-navbar (tottleSidebar)="menuOpened = !menuOpened"></app-navbar>
+
+    <div class="page-body">
+        <div class="page-menu" [class.opened]="menuOpened">
+            <a routerLink="/films" class="page-menu-item">Film</a>
+            <a routerLink="/films/add" class="page-menu-item" *ngIf="userService.loggedUser">Aggiungi film</a>
+            <a routerLink="/actors" class="page-menu-item">Attori</a>
+            <a routerLink="/actors/add" class="page-menu-item" *ngIf="userService.loggedUser">Aggiungi attore</a>
+            <a routerLink="/genres" class="page-menu-item">Generi</a>
+            <a routerLink="/genres/add" class="page-menu-item" *ngIf="userService.loggedUser">Aggiungi genere</a></div>
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <nav class="navbar navbar-dark justify-content-between page-footer"><span class="navbar-text">Footer</span></nav>
+</div>

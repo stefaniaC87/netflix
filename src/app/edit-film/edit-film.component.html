@@ -1,86 +1,75 @@
-<div><a routerLink="/films">Film</a></div>
-
-
-<div *ngIf="filmService.selectedFilm">
-    <div>
-        <div>
-            <label>Titolo</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci il titolo" [(ngModel)]="filmService.selectedFilm.title">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Descrizione</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci descrizione" [(ngModel)]="filmService.selectedFilm.description">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Generi</label>
-        </div>
-        <div>
-            <select [(ngModel)]="filmService.selectedFilm.genres" multiple>
-            <option [value]="genre" *ngFor="let genre of actors">{{genre.name}}</option>
-          </select>
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Regista</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci regista" [(ngModel)]="filmService.selectedFilm.director">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Attori</label>
-        </div>
-        <div>
-
-            <div *ngFor="let actor of actors">
-                <input type="checkbox" [checked]="checkActor(actor)" (change)="updateActors($event.target.checked, actor)"> {{actor.firstname}} {{actor.lastname}}
+<div class="container my-3">
+    <h1>Modifica film</h1>
+    <hr>
+    <div *ngIf="!film">Loading film...</div>
+    <div class="row" *ngIf="film">
+        <div class="col">
+            <div class="form-group">
+                <label>Id</label>
+                <input class="form-control" type="text" placeholder="id" [(ngModel)]="film.id" readonly>
+            </div>
+            <div class="form-group">
+                <label>titolo</label>
+                <input class="form-control" type="text" placeholder="titolo" [(ngModel)]="film.title">
+            </div>
+            <div class="form-group">
+                <label>Cover url</label>
+                <input class="form-control" type="text" placeholder="Cover url" [(ngModel)]="film.coverUrl">
+            </div>
+            <div class="form-group">
+                <label>Descrizione</label>
+                <textarea class="form-control" [(ngModel)]="film.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Trama</label>
+                <textarea class="form-control" [(ngModel)]="film.plot" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Regista</label>
+                <input class="form-control" type="text" placeholder="regista" [(ngModel)]="film.director">
+            </div>
+            <div class="form-group">
+                <label>Durata</label>
+                <input class="form-control" type="time" placeholder="durata" [(ngModel)]="film.duration">
+            </div>
+            <div class="form-group">
+                <label>Anno di uscita</label>
+                <input class="form-control" type="number" placeholder="anno di uscita" [(ngModel)]="film.releaseYear">
+            </div>
+            <div class="form-group">
+                <label>Voto</label>
+                <div class="input-group mb-2">
+                    <input class="form-control" type="number" min="0" max="5" step="0.5" placeholder="voto" [(ngModel)]="film.stars">
+                    <div class="input-group-append">
+                        <div class="input-group-text">su 5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Cast</label>
+                <div *ngIf="!actors">Loading actors</div>
+                <div *ngIf="actors">
+                    <button type="button" class="btn btn-sm m-1" *ngFor="let actor of actors" (click)="actor.selected = !actor.selected" [class.btn-secondary]="actor.selected" [class.btn-outline-secondary]="!actor.selected">{{actor.firstname}} {{actor.lastname}}</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Generi</label>
+                <div *ngIf="!genres">Loading actors</div>
+                <div *ngIf="genres">
+                    <button type="button" class="btn btn-sm m-1" *ngFor="let genre of genres" (click)="genre.selected = !genre.selected" [class.btn-secondary]="genre.selected" [class.btn-outline-secondary]="!genre-selected">{{genre.name}}</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tags</label>
+                <input class="form-control" type="text" placeholder="tags" [(ngModel)]="film.tags">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary" (click)="editFilm()">Salva</button>
+                <button class="btn btn-danger" routerLink="/films">Anulla</button>
             </div>
         </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Durata</label>
+        <div class="col-3">
+            <img [src]="film.coverUrl || 'https://via.placeholder.com/200x300?text=NO+COVER'" alt="copertina film" style="width: 100%;">
         </div>
-        <div>
-            <input type="text" placeholder="inserisci la durata" [(ngModel)]="filmService.selectedFilm.duration">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Anno di uscita</label>
-        </div>
-        <div>
-            <input type="number" placeholder="inserisci l'anno" [(ngModel)]="filmService.selectedFilm.releaseYear">
-        </div>
-    </div>
-
-
-
-    <div>
-        <div>
-            <label>Tags</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci tags" [(ngModel)]="filmService.selectedFilm.tags">
-        </div>
-    </div>
-    <div>
-        <button (click)="filmService.editFilm()" routerLink="/films">Salva film</button>
     </div>
 </div>

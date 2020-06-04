@@ -1,1 +1,16 @@
-<p>genres works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let genre of genres">
+            <div class="card my-3" style="height: calc(100% - 2rem);">
+                <div class="card-header">{{genre.name}}</div>
+                <div class="card-body">
+                    <h6>Film</h6>
+                    <p *ngIf="!genre.films.length">Nessuno</p>
+                    <ul *ngIf="genre.films.length">
+                        <li *ngFor="let film of genre.films">{{film.title}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

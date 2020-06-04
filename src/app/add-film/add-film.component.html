@@ -1,95 +1,68 @@
-<div><a routerLink="/films">Film</a></div>
-
-
-<div>
-    <div>
-        <div>
-            <label>Titolo</label>
+<div class="container my-3">
+    <h1>Aggiungi film</h1>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Titolo</label>
+                <input class="form-control" type="text" placeholder="titolo" [(ngMdel)]="film.title">
+            </div>
+            <div class="form-group">
+                <label>Cover url</label>
+                <input class="form-control" type="text" placeholder="cover url" [(ngModel)]="film.coverUrl">
+            </div>
+            <div class="form-group">
+                <label>Descrizione</label>
+                <textarea class="form-control" [(ngModel)]="film.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Trama</label>
+                <textarea class="form-control" [(ngModel)]="film.plot" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Regista</label>
+                <input class="form-control" type="text" placeholder="regista" [(ngModel)]="film.director">
+            </div>
+            <div class="form-group">
+                <label>Durata</label>
+                <input class="form-control" type="time" placeholder="durata" [(ngModel)]="film.duration">
+            </div>
+            <div class="form-group">
+                <label>Anno di uscita</label>
+                <input class="form-control" type="number" placeholder="anno di uscita" [(ngModel)]="film.releaseYear">
+            </div>
+            <div class="form-group">
+                <label>Voto</label>
+                <div class="input-group mb-2">
+                    <input class="form-control" type="number" min="0" max="5" step="o.5" placeholder="voto" [(ngModel)]="film.stars">
+                    <div class="input-group-append">
+                        <div class="input-group-text">su 5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Cast</label>
+                <div>
+                    <button type="button" class="btn btn-sm m-1" *ngFor="let actor of actors" (click)="actor.selected = !actor.selected" [class.btn-secondary]="actor.selected" [class.btn-outline-secondary]="!actor.selected">{{actor.firstname}} {{actor.lastname}}</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Generi</label>
+                <div>
+                    <button type="button" class="btn btn-sm m-1" *ngFor="let genre of genres" (click)="genre.selected =!genre.selected" [class.btn-secondary]="genre.selected" [class.btn-outline-secondary]="genre.selected">{{genre.name}}</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tags</label>
+                <input class="form-control" type="text" placeholder="tags" [(ngModel)]="film.tags">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary" (click)="addFilm()">Aggiungi film</button>
+                <button class="btn btn-secondary" routerLink="/films">Annulla</button>
+            </div>
         </div>
-        <div>
-            <input type="text" placeholder="inserisci il titolo" [(ngModel)]="filmService.newFilm.title">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Descrizione</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci descrizione" [(ngModel)]="filmService.newFilm.description">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Generi</label>
-        </div>
-        <!-- <div>
-            <select [(ngModel)]="filmService.newFilm.genres" multiple>
-            <option [value]="genre" *ngFor="let genre of genres">{{genre.name}}</option>
-          </select>
-        </div> -->
-        <div *ngFor="let genre of genres">
-            <input type="checkbox" (change)="addGenre($event.target.chekcked, genre)"> {{genre.name}}
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Regista</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci regista" [(ngModel)]="filmService.newFilm.director">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Attori</label>
-        </div>
-        <div>
-            <select [(ngModel)]="filmService.newFilm.cast" multiple>
-              <option [value]="actor" *ngFor="let actor of actors">{{actor.firstname}} {{actor.lastname}}</option>
-            </select>
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Durata</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci la durata" [(ngModel)]="filmService.newFilm.duration">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Anno di uscita</label>
-        </div>
-        <div>
-            <input type="number" placeholder="inserisci l'anno" [(ngModel)]="filmService.newFilm.releaseYear">
+        <div class="col-3">
+            <img [src]="film.coverUrl || 'https://via.placeholder.com/200x300?text=NO+COVER'" alt="copertina film" style="width: 100%;">
         </div>
     </div>
-
-    <div>
-        <div>
-            <label>Indice di gradimento</label>
-        </div>
-        <div>
-            <input type="number" min="0" max="5" step="0.5" placeholder="inserisci voto" [(ngModel)]="filmService.newFilm.stars">
-        </div>
-    </div>
-
-    <div>
-        <div>
-            <label>Tags</label>
-        </div>
-        <div>
-            <input type="text" placeholder="inserisci tags" [(ngModel)]="filmService.newFilm.tags">
-        </div>
-    </div>
-</div>
-<div>
-    <button (click)="filmService.addFilm()">Aggiungi film</button>
 </div>
