@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getLoggedUser();
   }
+  openMenu(): void{
+    this.toggleSidebar.emit(true);
+    setTimeout(() => this.menuIsOpen = true, 850);
+  }
   closeMenu(): void{
     this.toggleSidebar.emit(false);
     setTimeout(() => this.menuIsOpen = false, 850);

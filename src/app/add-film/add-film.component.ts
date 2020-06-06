@@ -22,7 +22,7 @@ export class AddFilmComponent implements OnInit {
     private router: Router,
     public filmService: FilmService,
     private actorService: ActorService,
-    private genresService: GenreService) { }
+    private genreService: GenreService) { }
 
   ngOnInit() {
     this.resetFilm();
@@ -46,7 +46,7 @@ export class AddFilmComponent implements OnInit {
       });
     });
 
-    this.genresService.getGenres().subscribe(genres => {
+    this.genreService.getGenres().subscribe(genres => {
       this.genres = genres;
 
       this.genres.map(x => {

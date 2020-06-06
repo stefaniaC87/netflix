@@ -2,7 +2,7 @@
     <fa-icon [icon]="faBars" (click)="openMenu()" class="navbar-button" *ngIf="!menuIsOpen"></fa-icon>
     <fa-icon [icon]="faTimes" (click)="closeMenu()" class="navbar-button" *ngIf="menuIsOpen"></fa-icon>
     <div class="title">{{title}}</div>
-    <div style="flex-grow: 1;"></div>
+    <div style="flex-grow: 1"></div>
     <div class="navbar-button">
         <div *ngIf="!userService.loggedUser" class="position-relative">
             <div (click)="hideLogin = !hideLogin">

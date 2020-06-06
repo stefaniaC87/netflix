@@ -22,7 +22,7 @@ export class EditFilmComponent implements OnInit {
     private router: Router,
     public filmService: FilmService,
     private actorService: ActorService,
-    private genresService: GenreService) { }
+    private genreService: GenreService) { }
 
     ngOnInit() {
       const id = +this.route.snapshot.paramMap.get('id');
@@ -54,7 +54,7 @@ export class EditFilmComponent implements OnInit {
         });
 
 
-        this.genresService.getGenres().subscribe(genres => {
+        this.genreService.getGenres().subscribe(genres => {
           this.genres = genres;
 
 
@@ -73,9 +73,7 @@ export class EditFilmComponent implements OnInit {
           if (nameA > nameB) {
             return 1;
           }
-            if (nameA > nameB) {
-              return 1;
-            }
+
           });
         });
 
