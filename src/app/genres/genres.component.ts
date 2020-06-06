@@ -9,27 +9,27 @@ import { FilmService } from '../services/film.service';
   styleUrls: ['./genres.component.css']
 })
 export class GenresComponent implements OnInit {
-  genres : Genre[];
+  genres: Genre[];
 
-  constructor(private genresService: GenreService,
-    private filmService: FilmService) { }
+  constructor(private genreService: GenreService, private filmService: FilmService) { }
 
   ngOnInit() {
-    this.genresService.getGenres().subscribe(response => {
+    this.genreService.getGenres().subscribe(response => {
       this.genres = response;
+
       this.filmService.getFilms().subscribe(films => {
         this.genres.map(genre => {
           genre.films = films.filter(film => film.genres.find(x => x.id == genre.id) != null);
           return genre;
         });
 
-        this.genres.sort((a,b) => {
+        this.genres.sort((a, b) => {
           let nameA = (a.name).toUpperCase();
           let nameB = (b.name).toUpperCase();
-          if(nameA < nameB){
+          if (nameA < nameB) {
             return -1;
           }
-          if(nameA > nameB){
+          if (nameA > nameB) {
             return 1;
           }
         });

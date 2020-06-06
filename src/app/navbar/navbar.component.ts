@@ -10,36 +10,47 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent implements OnInit {
   @Output() toggleSidebar = new EventEmitter();
 
+  //Icons
   faBars = faBars;
   faTimes = faTimes;
   faUserTimes = faUserTimes;
+
   title = 'Netflix';
-  hideLogin:boolean = true;
-  menuIsOpen : boolean = false;
+  hideLogin: boolean = true;
+  menuIsOpen: boolean = false;
+
   username: string;
   password: string;
   rememberMe: boolean;
 
-  constructor(public userService: UserService) { }
+  constructor(
+    public userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.userService.getLoggedUser();
   }
-  openMenu(): void{
+
+  openMenu(): void {
     this.toggleSidebar.emit(true);
     setTimeout(() => this.menuIsOpen = true, 850);
   }
-  closeMenu(): void{
+
+  closeMenu(): void {
     this.toggleSidebar.emit(false);
     setTimeout(() => this.menuIsOpen = false, 850);
   }
-  login(){
-    this.userService.login(this.username, this.password, this.rememberMe).subscribe(() => {
-      this.hideLogin = this.userService.loggedUser != null;
-    });
+
+  login() {
+    this.userService.login(this.username, this.password, this.rememberMe).subscribe(
+      () => {
+        this.hideLogin = this.userService.loggedUser != null;
+      }
+    );
   }
-logout(){
-  this.userService.logout();
-  this.hideLogin = true;
-}
+
+  logout() {
+    this.userService.logout();
+    this.hideLogin = true;
+  }
 }

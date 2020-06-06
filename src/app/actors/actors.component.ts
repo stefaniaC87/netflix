@@ -9,7 +9,7 @@ import { FilmService } from '../services/film.service';
   styleUrls: ['./actors.component.css']
 })
 export class ActorsComponent implements OnInit {
-  actors : Actor[];
+  actors: Actor[];
 
   constructor(private actorService: ActorService, private filmService: FilmService) { }
 
@@ -23,13 +23,13 @@ export class ActorsComponent implements OnInit {
           return actor;
         });
 
-        this.actors.sort((a,b) => {
+        this.actors.sort((a, b) => {
           let nameA = (a.firstname + ' ' + a.lastname).toUpperCase();
           let nameB = (b.firstname + ' ' + b.lastname).toUpperCase();
-          if(nameA < nameB){
+          if (nameA < nameB) {
             return -1;
           }
-          if(nameA > nameB){
+          if (nameA > nameB) {
             return 1;
           }
         });
