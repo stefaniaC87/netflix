@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { faStar, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faStar, IconDefinition,} from '@fortawesome/free-solid-svg-icons';
 import { faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 
@@ -16,9 +16,9 @@ export class StarsComponent implements OnChanges {
   @Output() voteChanged = new EventEmitter();
 
   icons: IconDefinition[] = [];
-  stellinaPiena = faStar;
-  mezzaStellina = faStarHalfAlt;
-  stellinaVuota = faStarEmpty;
+  faStar = faStar;
+  faStarHalfAlt = faStarHalfAlt;
+  faStarEmpty = faStarEmpty;
 
   constructor() { }
 
@@ -26,11 +26,11 @@ export class StarsComponent implements OnChanges {
     this.icons = [];
     for (var i = 1; i <= starsTotal; i++) {
       if (this.vote >= i) {
-        this.icons.push(this.stellinaPiena);
+        this.icons.push(this.faStar);
       } else if (this.vote >= (i - 0.5)) {
-        this.icons.push(this.mezzaStellina);
+        this.icons.push(this.faStarHalfAlt);
       } else {
-        this.icons.push(this.stellinaVuota);
+        this.icons.push(this.faStarEmpty);
       }
     }
   }
