@@ -1,5 +1,5 @@
 <div class="container my-3">
-    <h1>Edit film</h1>
+    <h1>Modifica film</h1>
 
     <hr>
 
@@ -14,7 +14,7 @@
                 <input class="form-control" type="text" placeholder="Id" [(ngModel)]="film.id" readonly>
             </div>
             <div class="form-group">
-                <label>Title</label>
+                <label>Titolo</label>
                 <input class="form-control" type="text" placeholder="Title" [(ngModel)]="film.title">
             </div>
             <div class="form-group">
@@ -22,7 +22,7 @@
                 <input class="form-control" type="text" placeholder="Cover url" [(ngModel)]="film.coverUrl">
             </div>
             <div class="form-group">
-                <label>Description</label>
+                <label>Descrizione</label>
                 <textarea class="form-control" [(ngModel)]="film.description"></textarea>
             </div>
             <div class="form-group">
@@ -30,19 +30,19 @@
                 <textarea class="form-control" [(ngModel)]="film.plot" rows="5"></textarea>
             </div>
             <div class="form-group">
-                <label>Director</label>
+                <label>Regista</label>
                 <input class="form-control" type="text" placeholder="Director" [(ngModel)]="film.director">
             </div>
             <div class="form-group">
-                <label>Duration</label>
+                <label>Durata</label>
                 <input class="form-control" type="time" placeholder="Duration" [(ngModel)]="film.duration">
             </div>
             <div class="form-group">
-                <label>Release Year</label>
+                <label>Anno di uscita</label>
                 <input class="form-control" type="number" placeholder="Release Year" [(ngModel)]="film.releaseYear">
             </div>
             <div class="form-group">
-                <label>Vote</label>
+                <label>Voto</label>
                 <div class="input-group mb-2">
                     <input class="form-control" type="number" min="0" max="5" step="0.5" placeholder="Vote" [(ngModel)]="film.stars">
                     <div class="input-group-append">
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Genres</label>
+                <label>Generi</label>
                 <div *ngIf="!genres">
                     Loading actors...
                 </div>
@@ -80,8 +80,8 @@
 
 
             <div class="d-flex justify-content-between">
-                <button class="btn btn-secondary" (click)="editFilm()">Save film</button>
-                <button class="btn btn-danger" routerLink="/films">Cancel</button>
+                <button class="btn btn-secondary" (click)="editFilm()">Salva</button>
+                <button class="btn btn-danger" routerLink="/films">Annulla</button>
             </div>
         </div>
         <div class="col-3">
