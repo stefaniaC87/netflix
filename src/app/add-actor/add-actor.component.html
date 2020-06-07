@@ -1,1 +1,21 @@
-<p>add-actor works!</p>
+<div class="container my-3">
+    <h1>Aggiungi attore</h1>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Nome</label>
+                <input class="form-control" type="text" placeholder="nome" [(ngModel)]="this.actorService.newActor.firstname">
+            </div>
+            <div class="form-group">
+                <label>Cognome</label>
+                <input class="form-control" type="text" placeholder="cognome" (ngModel)="this.actorService.newActor.lastname">
+            </div>
+            <div class="d-flex justify-content-between">
+                <a routerLink="/actors" (click)="this.actorService.addActor()" class="btn btn-secondary">salva</a>
+                <!-- <input type="button" class="btn btn-secondary" (click)="this.actorService.addActor()" value="aggiungi"> -->
+                <button class="btn btn-danger" routerLink="/actors">Annulla</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActorService } from '../services/actor.service';
+
 
 @Component({
   selector: 'app-add-actor',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddActorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private actorService: ActorService) { }
 
   ngOnInit() {
+
+
   }
+
+
 
 }

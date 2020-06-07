@@ -5,6 +5,7 @@ import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, map, catchError } from 'rxjs/operators';
 import { CONFIG } from '../config';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,19 @@ export class ActorService {
   }
 
   addActor(): void {
-    this.actors.push(this.newActor);
-    this.localStorage.store('actors', this.actors);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.userService.getLoggedUser().token
+      })
+
+    };
+    this.http.post<Actor>(CONFIG.hostApi + '/actor/create.php', this.newActor, httpOptions).subscribe(response => {
+
+      this.http.get<Actor[]>(CONFIG.hostApi + '/actor/read.php', ).subscribe(response => this.actors = response);
+
+    });
+
 
     // Reset newActor
     this.newActor = {
@@ -44,6 +56,7 @@ export class ActorService {
   }
 
   constructor(
+    private userService: UserService,
     private localStorage: LocalStorageService,
     private http: HttpClient
   ) { }
